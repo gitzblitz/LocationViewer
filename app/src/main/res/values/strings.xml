@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Location Viewer</string>
+    <string name="location_description">Location description</string>
+    <string name="location_name">Location name</string>
 </resources>
