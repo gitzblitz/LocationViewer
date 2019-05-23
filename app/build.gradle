@@ -41,6 +41,13 @@ dependencies {
     //lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.archLifecycleVersion"
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$rootProject.archLifecycleVersion"
-    implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation "androidx.cardview:cardview:$rootProject.cardView"
+    implementation "com.google.android.material:material:$rootProject.materialDesign"
+
+    // paging
+    implementation "androidx.paging:paging-runtime:$rootProject.pagingVersion"
+    testImplementation "androidx.paging:paging-common:$rootProject.pagingVersion"
+
+    //debug bridge
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 }

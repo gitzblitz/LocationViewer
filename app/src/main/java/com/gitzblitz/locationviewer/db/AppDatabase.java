@@ -55,15 +55,16 @@ public abstract class AppDatabase extends RoomDatabase {
 
             locationDao.deleteAll();
 
-            Location location = new Location("Cape Town", "Some description", true, "GPS",
-                    null, null, null, null);
+            MockData mockData = new MockData();
+//            Location location = new Location("Cape Town", "Some description", true, "GPS",
+//                    null, null, null, null);
 
-            locationDao.insert(location);
+            locationDao.insert(mockData.generateLocations());
 
-            Location location2 = new Location("Johannesburg", "Some description", true, "Bluetooth",
-                    null, null, null, null);
-
-            locationDao.insert(location2);
+//            Location location2 = new Location("Johannesburg", "Some description", true, "Bluetooth",
+//                    null, null, null, null);
+//
+//            locationDao.insert(location2);
 
 
 

@@ -1,4 +1,4 @@
-package com.gitzblitz.locationviewer.ui;
+package com.gitzblitz.locationviewer.viewmodel;
 
 import android.app.Application;
 
@@ -10,8 +10,6 @@ import androidx.paging.PagedList;
 
 import com.gitzblitz.locationviewer.db.Location;
 import com.gitzblitz.locationviewer.db.LocationRepository;
-
-import java.util.List;
 
 public class LocationListViewModel extends AndroidViewModel {
 
@@ -27,11 +25,11 @@ public class LocationListViewModel extends AndroidViewModel {
 
     }
 
-    public LiveData<PagedList<Location>> getAllLocations(){
+    public LiveData<PagedList<Location>> getAllLocations() {
         return mAllLocations;
     }
 
-    public void insertLocation(Location location){
+    public void insertLocation(Location location) {
         locationRepository.insertLocation(location);
     }
 }

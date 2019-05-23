@@ -18,6 +18,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url 'https://jitpack.io' }
         
     }
 }
@@ -29,4 +30,7 @@ task clean(type: Delete) {
 ext {
     roomVersion = '2.1.0-beta01'
     archLifecycleVersion = '2.0.0'
+    pagingVersion = '2.1.0'
+    materialDesign = '1.0.0'
+    cardView = '1.0.0'
 }
