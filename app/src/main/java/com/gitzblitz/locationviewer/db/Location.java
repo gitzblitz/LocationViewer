@@ -1,5 +1,6 @@
 package com.gitzblitz.locationviewer.db;
 
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -27,18 +28,22 @@ public class Location {
     @ColumnInfo(name = "major")
     private String major;
 
-    @ColumnInfo(name = "coordinates")
-    private String coordinates;
+    @ColumnInfo(name = "longitude")
+    private String longitude;
+    @ColumnInfo(name = "latitude")
+    private String latitude;
 
 
-    public Location(String name, String description, Boolean locationState, String locationTypeName, String minor, String major, String coordinates) {
+    public Location(String name, String description, Boolean locationState, String locationTypeName, String minor, String major, String longitude, String latitude) {
+
         this.name = name;
         this.description = description;
         this.locationState = locationState;
         this.locationTypeName = locationTypeName;
         this.minor = minor;
         this.major = major;
-        this.coordinates = coordinates;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
     public Boolean getLocationState() {
@@ -98,11 +103,31 @@ public class Location {
         this.major = major;
     }
 
-    public String getCoordinates() {
-        return coordinates;
+    public String getLongitude() {
+        return longitude;
     }
 
-    public void setCoordinates(String coordinates) {
-        this.coordinates = coordinates;
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj == this)
+            return true;
+
+        Location location = (Location) obj;
+        if (location != null) {
+            return location.uid == this.uid;
+        }
+        return false;
     }
 }

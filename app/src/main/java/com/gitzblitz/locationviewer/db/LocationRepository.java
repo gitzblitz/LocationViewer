@@ -4,13 +4,15 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
+import androidx.paging.PagedList;
 
 import java.util.List;
 
 public class LocationRepository {
 
     private LocationDao locationDao;
-    private LiveData<List<Location>> mAllLocations;
+    private DataSource.Factory<Integer, Location> mAllLocations;
 
     public LocationRepository(Application application) {
         AppDatabase db = AppDatabase.getDatabase(application);
@@ -18,7 +20,7 @@ public class LocationRepository {
         mAllLocations = locationDao.getAllLocations();
     }
 
-  public  LiveData<List<Location>> getAllLocations(){
+  public DataSource.Factory<Integer, Location> getAllLocations(){
         return  mAllLocations;
     }
 

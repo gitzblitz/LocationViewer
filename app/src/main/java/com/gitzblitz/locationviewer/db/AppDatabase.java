@@ -24,6 +24,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "location_database")
                             .addCallback(callback)
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }
@@ -55,12 +56,12 @@ public abstract class AppDatabase extends RoomDatabase {
             locationDao.deleteAll();
 
             Location location = new Location("Cape Town", "Some description", true, "GPS",
-                    null, null, null);
+                    null, null, null, null);
 
             locationDao.insert(location);
 
             Location location2 = new Location("Johannesburg", "Some description", true, "Bluetooth",
-                    null, null, null);
+                    null, null, null, null);
 
             locationDao.insert(location2);
 
