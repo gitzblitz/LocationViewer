@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
-import com.gitzblitz.locationviewer.db.Location;
+import com.gitzblitz.locationviewer.model.Location;
 import com.gitzblitz.locationviewer.db.LocationRepository;
 
 public class LocationListViewModel extends AndroidViewModel {

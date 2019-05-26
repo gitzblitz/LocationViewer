@@ -8,9 +8,10 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
 
+import com.gitzblitz.locationviewer.model.Location;
+
 import java.util.List;
 
-import io.reactivex.Maybe;
 import io.reactivex.Single;
 
 @Dao

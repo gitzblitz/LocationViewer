@@ -1,4 +1,4 @@
-package com.gitzblitz.locationviewer.db;
+package com.gitzblitz.locationviewer.model;
 
 import android.text.TextUtils;
 

@@ -61,6 +61,14 @@ dependencies {
     //debug bridge
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 
+    //moshi
+    implementation 'com.squareup.moshi:moshi:1.8.0'
+
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.5.0'
+
+
 
     def lifecycle_version = "2.0.0"
 

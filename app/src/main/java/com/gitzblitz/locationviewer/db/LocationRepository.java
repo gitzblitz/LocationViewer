@@ -5,7 +5,8 @@ import android.os.AsyncTask;
 
 import androidx.paging.DataSource;
 
-import io.reactivex.Maybe;
+import com.gitzblitz.locationviewer.model.Location;
+
 import io.reactivex.Single;
 
 public class LocationRepository {

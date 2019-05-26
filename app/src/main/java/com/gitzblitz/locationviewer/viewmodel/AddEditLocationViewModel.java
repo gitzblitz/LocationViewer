@@ -12,7 +12,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.gitzblitz.locationviewer.SingleLiveEvent;
-import com.gitzblitz.locationviewer.db.Location;
+import com.gitzblitz.locationviewer.model.Location;
 import com.gitzblitz.locationviewer.db.LocationRepository;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;

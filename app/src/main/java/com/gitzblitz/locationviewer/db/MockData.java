@@ -1,5 +1,7 @@
 package com.gitzblitz.locationviewer.db;
 
+import com.gitzblitz.locationviewer.model.Location;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

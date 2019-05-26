@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gitzblitz.locationviewer.R;
-import com.gitzblitz.locationviewer.db.Location;
+import com.gitzblitz.locationviewer.model.Location;
 
 
 public class LocationListAdapter extends PagedListAdapter<Location, LocationListAdapter.LocationViewHolder> {

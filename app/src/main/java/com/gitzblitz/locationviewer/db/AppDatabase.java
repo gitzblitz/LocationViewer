@@ -10,6 +10,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.gitzblitz.locationviewer.model.Location;
 import com.gitzblitz.locationviewer.utils.Converters;
 
 
