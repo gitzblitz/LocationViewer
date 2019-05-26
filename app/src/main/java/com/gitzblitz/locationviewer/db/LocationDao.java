@@ -5,8 +5,13 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Transaction;
+import androidx.room.Update;
 
 import java.util.List;
+
+import io.reactivex.Maybe;
+import io.reactivex.Single;
 
 @Dao
 public interface LocationDao {
@@ -21,4 +26,12 @@ public interface LocationDao {
 
     @Query("SELECT * FROM location ORDER BY name ASC")
     DataSource.Factory<Integer, Location> getAllLocations();
+
+    @Transaction
+    @Query("SELECT * FROM location WHERE uid=:locationID")
+    Single<Location> getLocationById(int locationID);
+
+    @Transaction
+    @Update
+   void updateLocation(Location location);
 }

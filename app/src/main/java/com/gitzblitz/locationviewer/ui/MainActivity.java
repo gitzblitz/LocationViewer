@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.fab);
 
         fab.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, AddLocationActivity.class);
+            Intent intent = new Intent(MainActivity.this, AddEditLocationActivity.class);
             startActivityForResult(intent, NEW_LOCATION_ACTIVITY_REQUEST_CODE);
         });
     }

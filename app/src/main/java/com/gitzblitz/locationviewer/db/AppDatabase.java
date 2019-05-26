@@ -7,10 +7,14 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.gitzblitz.locationviewer.utils.Converters;
 
-@Database(entities = {Location.class}, version = 1,exportSchema = false)
+
+@Database(entities = {Location.class}, version = 2,exportSchema = false)
+@TypeConverters(Converters.class)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract LocationDao locationDao();
@@ -34,8 +38,10 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     private static RoomDatabase.Callback callback = new RoomDatabase.Callback(){
+
+
         @Override
-        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onOpen(db);
 
             new PopulateDbAsync(INSTANCE).execute();

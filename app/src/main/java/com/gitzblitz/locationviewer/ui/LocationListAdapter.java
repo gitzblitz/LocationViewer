@@ -1,6 +1,7 @@
 package com.gitzblitz.locationviewer.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,8 +52,15 @@ public class LocationListAdapter extends PagedListAdapter<Location, LocationList
         Location location = getItem(position);
         if (location != null) {
             holder.bindTo(location);
-            holder.itemView.setOnClickListener(v ->
-                    Log.d("Adapter", "postion = " + position));
+            holder.itemView.setOnClickListener(v -> {
+
+                Intent intent = new Intent(v.getContext(), AddEditLocationActivity.class);
+                intent.putExtra("LocationID", location.getUid());
+                Log.d("Adapter", "postion = " + location.getName() + " " + location.getUid());
+
+                v.getContext().startActivity(intent);
+
+            });
         } else {
             holder.clear();
         }

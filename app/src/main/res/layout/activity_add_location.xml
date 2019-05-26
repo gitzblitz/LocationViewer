@@ -1,61 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.AddLocationActivity">
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.gitzblitz.locationviewer.viewmodel.AddEditLocationViewModel" />
+
+    </data>
 
 
-    <ScrollView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
+        android:id="@+id/root"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        tools:context=".ui.AddEditLocationActivity">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingEnd="24dp"
-            android:paddingStart="24dp"
-            android:orientation="vertical"
-            android:paddingTop="56dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
+                android:paddingEnd="24dp"
+                android:paddingStart="24dp"
+                android:orientation="vertical"
+                android:paddingTop="56dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/location_name"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/location_name"
-                    android:inputType="text"
-                    android:textSize="18sp" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/location_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@={viewmodel.locationNameEditText}"
+                        android:hint="@string/location_name"
+                        android:inputType="text"
+                        android:textSize="18sp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/location_desc"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/location_description" />
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/location_desc"
+                        android:layout_width="match_parent"
+                        android:text="@={viewmodel.locationDescEditText}"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/location_description" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="GPS Coordinates"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/gps_coordinates"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
 
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -69,6 +80,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/longitude_textView"
                         android:layout_width="match_parent"
+                        android:text="@={viewmodel.longitudeEditText}"
                         android:layout_height="match_parent"
                         android:hint="@string/longitude" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -84,84 +96,87 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/latitude_textView"
                         android:layout_width="match_parent"
+                        android:text="@={viewmodel.latitudeEditText}"
                         android:layout_height="match_parent"
                         android:hint="@string/latitude" />
                 </com.google.android.material.textfield.TextInputLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:weightSum="1"
-                android:orientation="horizontal">
-
                 <Spinner
                     android:id="@+id/location_provider_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:minHeight="40dp"
+                    android:onItemSelected="@{(parent,view,pos,id)->viewmodel.onSelectItem(parent,view,pos,id)}"
                     android:layout_gravity="center_horizontal"
-                    android:layout_weight="0.5"
                     android:entries="@array/location_providers"
                     android:spinnerMode="dropdown"
-                    android:textAlignment="center" />
+                    />
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/location_state_switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginStart="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:layout_marginTop="8dp"
-                    android:layout_weight="0.5"
-                    android:gravity="clip_vertical"
+                    android:checked="@={viewmodel.checkedSwitch}"
                     android:paddingTop="4dp"
+                    app:nullValue="@{false}"
                     android:paddingBottom="4dp"
-                    android:text="Location State"
-                    android:textAlignment="center"
+                    android:text="@string/location_state"
                     android:textColor="#5D5D5D"
-                    android:textStyle="bold" />
+                    android:textSize="14sp" />
+
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:id="@+id/btnGetlocation"
+                    android:text="@string/get_location"
+                    android:drawableStart="@drawable/ic_my_location_black_24dp"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="48dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/cancelButton"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/cancel"
+                        android:onClick="@{()->viewmodel.cancelUpdate()}"
+                        app:layout_constraintEnd_toStartOf="@+id/addLocationButton"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/addLocationButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:onClick="@{()-> viewmodel.saveLocation()}"
+                        android:layout_marginTop="4dp"
+                        android:background="@color/colorPrimary"
+                        android:text="@string/save"
+                        android:textColor="@android:color/white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.503"
+                        app:layout_constraintStart_toEndOf="@+id/cancelButton"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </LinearLayout>
 
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:layout_height="wrap_content">
 
-                <Button
-                    android:id="@+id/cancelButton"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/cancel"
-                    app:layout_constraintEnd_toStartOf="@+id/addLocationButton"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+        </ScrollView>
 
-                <Button
-                    android:id="@+id/addLocationButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@color/colorPrimary"
-                    android:text="@string/add"
-                    android:textColor="@android:color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.503"
-                    app:layout_constraintStart_toEndOf="@+id/cancelButton"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </LinearLayout>
-
-
-
-    </ScrollView>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

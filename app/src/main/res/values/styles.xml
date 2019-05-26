@@ -12,6 +12,10 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+    
+    <style name="AppTheme.Dialog" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+
+    </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
 
