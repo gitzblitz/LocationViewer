@@ -12,11 +12,20 @@ import android.util.Log;
 
 import com.gitzblitz.locationviewer.R;
 import com.gitzblitz.locationviewer.databinding.ActivityDetailLocationBinding;
+import com.gitzblitz.locationviewer.viewmodel.DaggerViewModelFactory;
 import com.gitzblitz.locationviewer.viewmodel.DetailLocationViewModel;
 
-public class DetailLocationActivity extends AppCompatActivity {
+import javax.inject.Inject;
+
+import dagger.android.support.DaggerAppCompatActivity;
+
+public class DetailLocationActivity extends DaggerAppCompatActivity {
 
     private static final String TAG = DetailLocationActivity.class.getName();
+
+    @Inject
+    DaggerViewModelFactory viewModelFactory;
+    DetailLocationViewModel detailLocationViewModel;
 
     int locationID;
 
@@ -38,7 +47,7 @@ public class DetailLocationActivity extends AppCompatActivity {
             Log.d(TAG, "No extra in bundle");
         }
 
-        DetailLocationViewModel detailLocationViewModel = ViewModelProviders.of(this)
+         detailLocationViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(DetailLocationViewModel.class);
 
         ActivityDetailLocationBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_detail_location);

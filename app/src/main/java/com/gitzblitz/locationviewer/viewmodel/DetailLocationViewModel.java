@@ -2,23 +2,28 @@ package com.gitzblitz.locationviewer.viewmodel;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
+import com.gitzblitz.locationviewer.LocationApplication;
 import com.gitzblitz.locationviewer.db.LocationRepository;
 import com.gitzblitz.locationviewer.utils.Utilities;
+
+import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class DetailLocationViewModel extends AndroidViewModel {
+public class DetailLocationViewModel extends ViewModel {
 
     private static final String TAG = DetailLocationViewModel.class.getName();
 
-    private LocationRepository locationRepository;
+    public LocationRepository locationRepository;
 
     private MutableLiveData<String> detailLocationName  = new MutableLiveData<String>();
     private MutableLiveData<String> detailLocationDescription = new MutableLiveData<String>();
@@ -39,10 +44,13 @@ public class DetailLocationViewModel extends AndroidViewModel {
 
     private int mLocationID;
 
+    public DetailLocationViewModel() {
+    }
 
-    public DetailLocationViewModel(@NonNull Application application) {
-        super(application);
-        locationRepository = new LocationRepository(application);
+    @Inject
+    public DetailLocationViewModel(LocationRepository repository) {
+        this.locationRepository = repository;
+
     }
 
 
@@ -50,12 +58,15 @@ public class DetailLocationViewModel extends AndroidViewModel {
     public void start(int locationID){
         mLocationID = locationID;
 
+        Log.d(TAG,"location id = " + locationID);
+
         if (locationID == 0) {
 
             throw new RuntimeException("locationID is null");
         }
 
-        locationRepository.getLocationById(locationID)
+        locationRepository
+                .getLocationById(locationID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(v-> {

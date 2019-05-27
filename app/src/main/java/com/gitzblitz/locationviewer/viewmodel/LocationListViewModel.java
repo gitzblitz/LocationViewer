@@ -5,21 +5,29 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
+import com.gitzblitz.locationviewer.LocationApplication;
 import com.gitzblitz.locationviewer.model.Location;
 import com.gitzblitz.locationviewer.db.LocationRepository;
 
-public class LocationListViewModel extends AndroidViewModel {
+import javax.inject.Inject;
 
-    private LocationRepository locationRepository;
+public class LocationListViewModel extends ViewModel {
+
+
+    protected LocationRepository locationRepository;
+
     private LiveData<PagedList<Location>> mAllLocations;
 
 
-    public LocationListViewModel(@NonNull Application application) {
-        super(application);
-        locationRepository = new LocationRepository(application);
+    @Inject
+    public LocationListViewModel(LocationRepository repository) {
+        this.locationRepository = repository;
+//        locationRepository = new LocationRepository(application);
+//        LocationApplication.getApp().getAppComponent().inject(this);
         mAllLocations = new LivePagedListBuilder<>(
                 locationRepository.getAllLocations(), 20).build();
 

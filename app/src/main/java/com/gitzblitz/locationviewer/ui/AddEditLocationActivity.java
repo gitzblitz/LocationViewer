@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,14 +18,24 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.gitzblitz.locationviewer.AddEditLocationNavigator;
-import com.gitzblitz.locationviewer.LocationProviderManager;
+import com.gitzblitz.locationviewer.utils.LocationProviderManager;
 import com.gitzblitz.locationviewer.R;
 import com.gitzblitz.locationviewer.databinding.ActivityAddLocationBinding;
 import com.gitzblitz.locationviewer.viewmodel.AddEditLocationViewModel;
+import com.gitzblitz.locationviewer.viewmodel.DaggerViewModelFactory;
 import com.google.android.material.snackbar.Snackbar;
 
+import javax.inject.Inject;
 
-public class AddEditLocationActivity extends AppCompatActivity implements AddEditLocationNavigator {
+import dagger.android.support.DaggerAppCompatActivity;
+
+
+public class AddEditLocationActivity extends DaggerAppCompatActivity implements AddEditLocationNavigator {
+
+    @Inject
+    DaggerViewModelFactory viewModelFactory;
+
+    AddEditLocationViewModel addViewModel;
 
     LocationProviderManager locationProviderManager;
     private static final int REQUEST_CODE_PERMISSION = 2;
@@ -59,7 +68,7 @@ public class AddEditLocationActivity extends AppCompatActivity implements AddEdi
             Log.d(TAG, "No extra in bundle");
         }
 
-        AddEditLocationViewModel addViewModel = ViewModelProviders.of(this)
+         addViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(AddEditLocationViewModel.class);
 
         ActivityAddLocationBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_add_location);

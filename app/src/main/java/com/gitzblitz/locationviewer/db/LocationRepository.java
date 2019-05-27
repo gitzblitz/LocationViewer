@@ -5,23 +5,30 @@ import android.os.AsyncTask;
 
 import androidx.paging.DataSource;
 
+import com.gitzblitz.locationviewer.api.Api;
 import com.gitzblitz.locationviewer.model.Location;
+import com.gitzblitz.locationviewer.model.WeatherData;
+import com.gitzblitz.locationviewer.utils.Constants;
+
+import javax.inject.Inject;
 
 import io.reactivex.Single;
 
 public class LocationRepository {
 
     private LocationDao locationDao;
+    private Api api;
     private DataSource.Factory<Integer, Location> mAllLocations;
+    private static final String WEATHER_API_KEY = "aa7aa59bfd60ddf73816ad836743ab40";
 
-    public LocationRepository(Application application) {
-        AppDatabase db = AppDatabase.getDatabase(application);
-        locationDao = db.locationDao();
-        mAllLocations = locationDao.getAllLocations();
+    @Inject
+    public LocationRepository(LocationDao locationDao, Api api) {
+        this.api = api;
+        this.locationDao = locationDao;
     }
 
     public DataSource.Factory<Integer, Location> getAllLocations() {
-        return mAllLocations;
+        return locationDao.getAllLocations();
     }
 
     public void insertLocation(Location location) {
@@ -34,6 +41,10 @@ public class LocationRepository {
 
     public void updateLocation(Location location) {
         new updateAsyncTask(locationDao).execute(location);
+    }
+
+    public Single<WeatherData> getWeatherInformation(String lat, String lon){
+        return api.getLocationWeather(lat, lon, Constants.WEATHER_API_KEY);
     }
 
 

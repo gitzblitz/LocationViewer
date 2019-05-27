@@ -11,18 +11,23 @@ import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
+import com.gitzblitz.locationviewer.LocationApplication;
 import com.gitzblitz.locationviewer.SingleLiveEvent;
 import com.gitzblitz.locationviewer.db.LocationRepository;
 import com.gitzblitz.locationviewer.model.Location;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class AddEditLocationViewModel extends AndroidViewModel {
+public class AddEditLocationViewModel extends ViewModel {
     private static final String TAG = AddEditLocationViewModel.class.getName();
 
-    private LocationRepository locationRepository;
+
+    protected LocationRepository locationRepository;
 
 
     public MutableLiveData<String> locationNameEditText = new MutableLiveData<String>();
@@ -55,10 +60,12 @@ public class AddEditLocationViewModel extends AndroidViewModel {
 
     private String[] entries = {"GPS", "Bluetooth", "RFID"};
 
+    public AddEditLocationViewModel() {
+    }
 
-    public AddEditLocationViewModel(@NonNull Application application) {
-        super(application);
-        locationRepository = new LocationRepository(application);
+    @Inject
+    public AddEditLocationViewModel(LocationRepository repository) {
+        this.locationRepository = repository;
 
     }
 

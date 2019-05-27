@@ -1,11 +1,9 @@
-package com.gitzblitz.locationviewer;
+package com.gitzblitz.locationviewer.utils;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
