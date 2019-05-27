@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.gitzblitz.locationviewer.viewmodel.DetailLocationViewModel" />
+    </data>
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.DetailLocationActivity">
@@ -15,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="44dp"
-        android:text="@string/location_name"
+        android:text="@{viewmodel.detailLocationName}"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:text="@string/location_description"
+        android:text="@{viewmodel.detailLocationDescription}"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/location_name_detail_txt" />
@@ -39,7 +47,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/longitude"
+        android:text="@{viewmodel.detailLocationLon}"
         app:layout_constraintBottom_toTopOf="@+id/barrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/location_desc_detail_txt" />
@@ -51,7 +59,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/latitude"
+        android:text="@{viewmodel.detailLocationLat}"
         app:layout_constraintBottom_toTopOf="@+id/barrier"
         app:layout_constraintStart_toEndOf="@+id/longitude_detail_textView"
         app:layout_constraintTop_toBottomOf="@+id/location_desc_detail_txt" />
@@ -60,30 +68,52 @@
         android:id="@+id/barrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:barrierDirection="top"
-        app:constraint_referenced_ids="location_weather_label_txt"
+        app:barrierDirection="bottom"
         tools:layout_editor_absoluteY="731dp" />
 
-    <TextView
-        android:id="@+id/location_weather_label_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="19dp"
-        android:layout_marginStart="32dp"
-        android:text="@string/weather_info_detail_txt"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="197dp" />
 
     <TextView
         android:id="@+id/location_temp_detail_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/temperature_detail"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@{viewmodel.detailTemperature}"
         android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/location_weather_label_txt" />
+        app:layout_constraintTop_toTopOf="@+id/barrier"
+        app:layout_constraintVertical_bias="0.126" />
+
+    <TextView
+        android:id="@+id/temp_label_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/weather_info_detail_txt"
+        app:layout_constraintBottom_toTopOf="@+id/location_temp_detail_txt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/barrier"
+        app:layout_constraintVertical_bias="0.129" />
+
+    <TextView
+        android:id="@+id/weather_fetched_timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:text="@{viewmodel.detailTimeFetched}"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.864"
+        app:layout_constraintStart_toEndOf="@+id/temp_label_text_view"
+        app:layout_constraintTop_toTopOf="@+id/barrier" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

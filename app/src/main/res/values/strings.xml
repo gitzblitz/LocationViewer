@@ -18,6 +18,8 @@
     <string name="temperature_detail">20 Degrees</string>
     <string name="add_location">Add Location</string>
     <string name="edit_location">Edit Location</string>
+    <string name="location_details">Location Details</string>
+    <string name="timestamp">Date 01/01/2019 5 pm</string>
 
 
     <string-array name="location_providers">

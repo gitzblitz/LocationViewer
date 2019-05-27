@@ -2,6 +2,8 @@ package com.gitzblitz.locationviewer.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,8 +17,10 @@ import com.gitzblitz.locationviewer.viewmodel.LocationListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = MainActivity.class.getName();
 
     public static final int NEW_LOCATION_ACTIVITY_REQUEST_CODE = 1;
+    LocationListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //get view model
-        LocationListAdapter adapter = new LocationListAdapter(this);
+         adapter = new LocationListAdapter(this);
         locationListViewModel.getAllLocations().observe(this, adapter::submitList);
         recyclerView.setAdapter(adapter);
 
@@ -42,6 +46,18 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, AddEditLocationActivity.class);
             startActivityForResult(intent, NEW_LOCATION_ACTIVITY_REQUEST_CODE);
         });
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        if (item.getItemId() == 121) {
+            Log.d(TAG, "Option clicked" + item.getGroupId());
+            adapter.openDetails(this, item.getGroupId());
+            return true;
+        }
+        return super.onContextItemSelected(item);
+
     }
 
 
