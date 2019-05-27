@@ -107,10 +107,11 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:minHeight="40dp"
-                    android:onItemSelected="@{(parent,view,pos,id)->viewmodel.onSelectItem(parent,view,pos,id)}"
                     android:layout_gravity="center_horizontal"
                     android:entries="@array/location_providers"
                     android:spinnerMode="dropdown"
+                    android:selectedItemPosition="@={viewmodel.selectedItemPosition}"
+                    android:onItemSelected="@{(parent,view,pos,id)->viewmodel.onSelectItem(parent,view,pos,id)}"
                     />
 
                 <androidx.appcompat.widget.SwitchCompat

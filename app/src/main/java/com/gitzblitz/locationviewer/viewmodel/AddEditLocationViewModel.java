@@ -2,6 +2,7 @@ package com.gitzblitz.locationviewer.viewmodel;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
@@ -12,8 +13,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.gitzblitz.locationviewer.SingleLiveEvent;
-import com.gitzblitz.locationviewer.model.Location;
 import com.gitzblitz.locationviewer.db.LocationRepository;
+import com.gitzblitz.locationviewer.model.Location;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -35,6 +36,8 @@ public class AddEditLocationViewModel extends AndroidViewModel {
 
     public MutableLiveData<String> latitudeEditText = new MutableLiveData<String>();
 
+    public MutableLiveData<Integer> selectedItemPosition = new MutableLiveData<Integer>();
+
 
     public MutableLiveData<Boolean> checkedSwitch = new MutableLiveData<Boolean>();
 
@@ -44,9 +47,13 @@ public class AddEditLocationViewModel extends AndroidViewModel {
 
     private int mLocationID;
 
+
     private boolean isNewLocation;
 
+
     private boolean isDataLoaded = false;
+
+    private String[] entries = {"GPS", "Bluetooth", "RFID"};
 
 
     public AddEditLocationViewModel(@NonNull Application application) {
@@ -57,6 +64,21 @@ public class AddEditLocationViewModel extends AndroidViewModel {
 
     public void onSelectItem(AdapterView<?> parent, View view, int pos, long id) {
 
+
+        Log.d(TAG, "item selected = " + parent.getSelectedItem());
+
+
+    }
+
+    private int getSpinnerPosition(String entry, String[] entries) {
+
+        for (int i = 0; i < entries.length; i++) {
+            if (entries[i].equals(entry)) {
+
+                return i;
+            }
+        }
+        return -1;
     }
 
     @SuppressLint("CheckResult")
@@ -75,11 +97,26 @@ public class AddEditLocationViewModel extends AndroidViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(v -> {
+
+
+//                    selectedItemPosition.postValue();
                     locationNameEditText.postValue(v.getName());
                     locationDescEditText.postValue(v.getDescription());
                     longitudeEditText.postValue(v.getLongitude());
                     latitudeEditText.postValue(v.getLatitude());
                     checkedSwitch.postValue(v.getLocationState());
+
+                    String item = v.getLocationTypeName();
+
+                    //get index of type
+
+                    for (int i = 0; i < entries.length; i++) {
+                        if (entries[i].equals(item)) {
+                            selectedItemPosition.postValue(i);
+                            break;
+                        }
+                    }
+
 
                 }, e -> e.printStackTrace());
 
@@ -94,13 +131,14 @@ public class AddEditLocationViewModel extends AndroidViewModel {
         checkableView.setChecked(isChecked != null ? isChecked : nullValue);
     }
 
+
     public void cancelUpdate() {
         mLocationCancelled.call();
     }
 
     public void saveLocation() {
 
-        Location location = new Location(locationNameEditText.getValue(), locationDescEditText.getValue(), checkedSwitch.getValue(), "GPS", null, null, longitudeEditText.getValue(), latitudeEditText.getValue(), null, null);
+        Location location = new Location(locationNameEditText.getValue(), locationDescEditText.getValue(), checkedSwitch.getValue(), entries[selectedItemPosition.getValue()], null, null, longitudeEditText.getValue(), latitudeEditText.getValue(), null, null);
 
         if (location.isEmpty()) {
             return;
@@ -109,7 +147,7 @@ public class AddEditLocationViewModel extends AndroidViewModel {
             createLocation(location);
 
         } else {
-            location = new Location(mLocationID, locationNameEditText.getValue(), locationDescEditText.getValue(), checkedSwitch.getValue(), "GPS", longitudeEditText.getValue(), latitudeEditText.getValue());
+            location = new Location(mLocationID, locationNameEditText.getValue(), locationDescEditText.getValue(), checkedSwitch.getValue(), entries[selectedItemPosition.getValue()], longitudeEditText.getValue(), latitudeEditText.getValue());
             updateLocation(location);
 
         }
