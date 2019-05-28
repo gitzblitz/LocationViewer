@@ -193,11 +193,14 @@ public class AddEditLocationActivity extends DaggerAppCompatActivity implements 
             double latitude = locationProviderManager.getLatitude();
             double longitude = locationProviderManager.getLongitude();
 
+
             try {
                 DecimalFormat decimalFormat = new DecimalFormat("##.########");
                 lonEditText.setText(decimalFormat.format(longitude));
                 latEditText.setText(decimalFormat.format(latitude));
-            } catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            } catch (NullPointerException e) {
                 e.printStackTrace();
             }
 
