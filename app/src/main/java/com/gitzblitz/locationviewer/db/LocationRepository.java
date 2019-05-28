@@ -1,6 +1,5 @@
 package com.gitzblitz.locationviewer.db;
 
-import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.paging.DataSource;
@@ -10,6 +9,9 @@ import com.gitzblitz.locationviewer.model.Location;
 import com.gitzblitz.locationviewer.model.WeatherData;
 import com.gitzblitz.locationviewer.utils.Constants;
 
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 
 import io.reactivex.Single;
@@ -18,7 +20,6 @@ public class LocationRepository {
 
     private LocationDao locationDao;
     private Api api;
-    private DataSource.Factory<Integer, Location> mAllLocations;
     private static final String WEATHER_API_KEY = "aa7aa59bfd60ddf73816ad836743ab40";
 
     @Inject
@@ -35,32 +36,29 @@ public class LocationRepository {
         new insertAsyncTask(locationDao).execute(location);
     }
 
-    public Single<Location> getLocationById(int locationID){
+    public Single<Location> getLocationById(int locationID) {
         return locationDao.getLocationById(locationID);
     }
 
-    public void updateLocation(Location location) {
-        new updateAsyncTask(locationDao).execute(location);
+    public Single<Integer> updateLocation(Location location) {
+       return locationDao.updateLocation(location);
     }
 
-    public Single<WeatherData> getWeatherInformation(String lat, String lon){
-        return api.getLocationWeather(lat, lon, Constants.WEATHER_API_KEY);
+    public Single<WeatherData> getWeatherInformation(String lat, String lon) {
+        return api.getLocationWeather(lat, lon, "metric", WEATHER_API_KEY);
     }
 
+    public Location updateLocationWithWeather(WeatherData data, Location location) {
 
-    private static class updateAsyncTask extends  AsyncTask<Location, Void, Void> {
-        private LocationDao mAsynclocationDao;
+        location.setTemperature(Double.toString(data.getMain().getTemp()));
+        location.setWeatherDate(new Date(TimeUnit.SECONDS.toMillis(data.getDt())));
 
-        public updateAsyncTask(LocationDao mAsynclocationDao) {
-            this.mAsynclocationDao = mAsynclocationDao;
-        }
+        locationDao.updateLocation(location);
 
-        @Override
-        protected Void doInBackground(Location... locations) {
-            mAsynclocationDao.updateLocation(locations[0]);
-            return null;
-        }
+        return location;
+
     }
+
 
     private static class insertAsyncTask extends AsyncTask<Location, Void, Void> {
         private LocationDao mAsynclocationDao;

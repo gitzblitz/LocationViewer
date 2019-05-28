@@ -12,11 +12,14 @@ import androidx.lifecycle.ViewModel;
 
 import com.gitzblitz.locationviewer.LocationApplication;
 import com.gitzblitz.locationviewer.db.LocationRepository;
+import com.gitzblitz.locationviewer.model.Location;
 import com.gitzblitz.locationviewer.utils.Utilities;
 
 import javax.inject.Inject;
 
+import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 public class DetailLocationViewModel extends ViewModel {
@@ -32,13 +35,13 @@ public class DetailLocationViewModel extends ViewModel {
     private MutableLiveData<String> detailTemperature = new MutableLiveData<String>();
     private MutableLiveData<String> detailTimeFetched = new MutableLiveData<String>();
 
-
-    private LiveData<String> locationName;
-    private LiveData<String> locationDescription;
-    private LiveData<String> locationLon;
-    private LiveData<String> locationLat;
-    private LiveData<String> locationTemperature;
-    private LiveData<String> locationTimeFetched;
+//
+//    private LiveData<String> locationName;
+//    private LiveData<String> locationDescription;
+//    private LiveData<String> locationLon;
+//    private LiveData<String> locationLat;
+//    private LiveData<String> locationTemperature;
+//    private LiveData<String> locationTimeFetched;
 
 
 
@@ -67,6 +70,9 @@ public class DetailLocationViewModel extends ViewModel {
 
         locationRepository
                 .getLocationById(locationID)
+                .flatMap(location -> locationRepository.getWeatherInformation(location.getLatitude(), location.getLongitude())
+                        .map(w -> locationRepository.updateLocationWithWeather(w,location)))
+                .subscribeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(v-> {

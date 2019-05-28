@@ -11,5 +11,6 @@ public interface Api {
     @GET("weather")
     Single<WeatherData> getLocationWeather(@Query("lat") String latitude,
                                            @Query("lon") String longitude,
+                                           @Query("units") String units,
                                            @Query("appid") String appid);
 }

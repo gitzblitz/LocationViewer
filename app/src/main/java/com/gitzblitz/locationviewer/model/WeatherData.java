@@ -20,7 +20,7 @@ public class WeatherData {
     @Json(name = "clouds")
     private Clouds clouds;
     @Json(name = "dt")
-    private Date dt;
+    private Long dt;
     @Json(name = "sys")
     private Sys sys;
     @Json(name = "id")
@@ -78,11 +78,11 @@ public class WeatherData {
         this.clouds = clouds;
     }
 
-    public Date getDt() {
+    public Long getDt() {
         return dt;
     }
 
-    public void setDt(Date dt) {
+    public void setDt(Long dt) {
         this.dt = dt;
     }
 

@@ -1,19 +1,15 @@
 package com.gitzblitz.locationviewer.viewmodel;
 
 import android.annotation.SuppressLint;
-import android.app.Application;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
 
-import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.gitzblitz.locationviewer.LocationApplication;
 import com.gitzblitz.locationviewer.SingleLiveEvent;
 import com.gitzblitz.locationviewer.db.LocationRepository;
 import com.gitzblitz.locationviewer.model.Location;
@@ -60,8 +56,6 @@ public class AddEditLocationViewModel extends ViewModel {
 
     private String[] entries = {"GPS", "Bluetooth", "RFID"};
 
-    public AddEditLocationViewModel() {
-    }
 
     @Inject
     public AddEditLocationViewModel(LocationRepository repository) {
@@ -77,16 +71,6 @@ public class AddEditLocationViewModel extends ViewModel {
 
     }
 
-    private int getSpinnerPosition(String entry, String[] entries) {
-
-        for (int i = 0; i < entries.length; i++) {
-            if (entries[i].equals(entry)) {
-
-                return i;
-            }
-        }
-        return -1;
-    }
 
     @SuppressLint("CheckResult")
     public void start(int locationID) {
@@ -101,12 +85,9 @@ public class AddEditLocationViewModel extends ViewModel {
         isNewLocation = false;
 
         locationRepository.getLocationById(locationID)
-                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(v -> {
 
-
-//                    selectedItemPosition.postValue();
                     locationNameEditText.postValue(v.getName());
                     locationDescEditText.postValue(v.getDescription());
                     longitudeEditText.postValue(v.getLongitude());
@@ -159,7 +140,6 @@ public class AddEditLocationViewModel extends ViewModel {
 
         }
 
-
     }
 
     public SingleLiveEvent<Void> getmLocationUpdated() {
@@ -176,6 +156,7 @@ public class AddEditLocationViewModel extends ViewModel {
         mLocationUpdated.call();
     }
 
+    @SuppressLint("CheckResult")
     private void updateLocation(Location location) {
 
         if (isNewLocation()) {
@@ -183,9 +164,10 @@ public class AddEditLocationViewModel extends ViewModel {
 
         }
 
-        locationRepository.updateLocation(location);
-        mLocationUpdated.call();
-
+        locationRepository.updateLocation(location)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(location1 -> mLocationUpdated.call(), Throwable::printStackTrace);
     }
 
 

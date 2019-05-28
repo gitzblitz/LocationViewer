@@ -12,6 +12,7 @@ import com.gitzblitz.locationviewer.model.Location;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 @Dao
@@ -34,5 +35,5 @@ public interface LocationDao {
 
     @Transaction
     @Update
-   void updateLocation(Location location);
+    Single<Integer> updateLocation(Location location);
 }

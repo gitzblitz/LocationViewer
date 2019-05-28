@@ -2,23 +2,27 @@ package com.gitzblitz.locationviewer.di;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.gitzblitz.locationviewer.BuildConfig;
 import com.gitzblitz.locationviewer.api.Api;
 import com.gitzblitz.locationviewer.db.AppDatabase;
 import com.gitzblitz.locationviewer.db.LocationDao;
 import com.gitzblitz.locationviewer.db.LocationRepository;
 import com.gitzblitz.locationviewer.db.MockData;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.moshi.MoshiConverterFactory;
@@ -85,13 +89,17 @@ public class DataModule {
 
     @Provides
     @Singleton
-    public OkHttpClient provideHttpClient() {
-        return new OkHttpClient().newBuilder().build();
+    @Named("httpsClient")
+    public OkHttpClient provideHttpClient(HttpLoggingInterceptor interceptor) {
+
+        return new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .build();
     }
 
     @Provides
     @Singleton
-    public Retrofit provideRetrofit(OkHttpClient okHttpClient) {
+    public Retrofit provideRetrofit(@Named("httpsClient") OkHttpClient okHttpClient) {
 
         return new Retrofit.Builder()
                 .addConverterFactory(MoshiConverterFactory.create())
@@ -110,6 +118,19 @@ public class DataModule {
     @Singleton
     public LocationRepository provideRepository(LocationDao locationDao, Api api) {
         return new LocationRepository(locationDao, api);
+    }
+
+    @Provides
+    @Singleton
+    public HttpLoggingInterceptor provideHttpLoggingInterceptor() {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(v -> Log.d("http-interceptor", v));
+
+        if (BuildConfig.DEBUG) {
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        } else {
+            interceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
+        }
+        return interceptor;
     }
 
 
