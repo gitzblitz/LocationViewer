@@ -80,6 +80,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/longitude_textView"
                         android:layout_width="match_parent"
+                        android:inputType="numberDecimal"
                         android:text="@={viewmodel.longitudeEditText}"
                         android:layout_height="match_parent"
                         android:hint="@string/longitude" />
@@ -96,6 +97,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/latitude_textView"
                         android:layout_width="match_parent"
+                        android:inputType="numberDecimal"
                         android:text="@={viewmodel.latitudeEditText}"
                         android:layout_height="match_parent"
                         android:hint="@string/latitude" />

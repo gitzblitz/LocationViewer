@@ -12,7 +12,6 @@ import com.gitzblitz.locationviewer.model.Location;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 @Dao

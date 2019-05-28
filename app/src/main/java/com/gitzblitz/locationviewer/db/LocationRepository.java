@@ -7,7 +7,6 @@ import androidx.paging.DataSource;
 import com.gitzblitz.locationviewer.api.Api;
 import com.gitzblitz.locationviewer.model.Location;
 import com.gitzblitz.locationviewer.model.WeatherData;
-import com.gitzblitz.locationviewer.utils.Constants;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -41,7 +40,7 @@ public class LocationRepository {
     }
 
     public Single<Integer> updateLocation(Location location) {
-       return locationDao.updateLocation(location);
+        return locationDao.updateLocation(location);
     }
 
     public Single<WeatherData> getWeatherInformation(String lat, String lon) {
@@ -59,7 +58,7 @@ public class LocationRepository {
 
     }
 
-
+//
     private static class insertAsyncTask extends AsyncTask<Location, Void, Void> {
         private LocationDao mAsynclocationDao;
 

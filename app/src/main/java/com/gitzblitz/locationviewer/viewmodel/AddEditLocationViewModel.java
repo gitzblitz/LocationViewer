@@ -85,6 +85,7 @@ public class AddEditLocationViewModel extends ViewModel {
         isNewLocation = false;
 
         locationRepository.getLocationById(locationID)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(v -> {
 

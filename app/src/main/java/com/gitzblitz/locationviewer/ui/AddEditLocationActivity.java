@@ -24,6 +24,9 @@ import com.gitzblitz.locationviewer.databinding.ActivityAddLocationBinding;
 import com.gitzblitz.locationviewer.viewmodel.AddEditLocationViewModel;
 import com.gitzblitz.locationviewer.viewmodel.DaggerViewModelFactory;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.text.DecimalFormat;
 
 import javax.inject.Inject;
 
@@ -45,6 +48,9 @@ public class AddEditLocationActivity extends DaggerAppCompatActivity implements 
     private static final String TAG = AddEditLocationActivity.class.getName();
 
     Button btnShowLocation;
+    TextInputEditText latEditText;
+    TextInputEditText lonEditText;
+
     View mLayout;
     int locationID;
 
@@ -85,6 +91,8 @@ public class AddEditLocationActivity extends DaggerAppCompatActivity implements 
         mLayout = findViewById(R.id.root);
 
         btnShowLocation = findViewById(R.id.btnGetlocation);
+        latEditText = findViewById(R.id.latitude_textView);
+        lonEditText = findViewById(R.id.longitude_textView);
 
         btnShowLocation.setOnClickListener(v -> startLocationUpdates());
 
@@ -184,6 +192,14 @@ public class AddEditLocationActivity extends DaggerAppCompatActivity implements 
         if (locationProviderManager.canGetLocation()) {
             double latitude = locationProviderManager.getLatitude();
             double longitude = locationProviderManager.getLongitude();
+
+            try {
+                DecimalFormat decimalFormat = new DecimalFormat("##.########");
+                lonEditText.setText(decimalFormat.format(longitude));
+                latEditText.setText(decimalFormat.format(latitude));
+            } catch (NumberFormatException e){
+                e.printStackTrace();
+            }
 
             Toast.makeText(this, "longitude = " + longitude + "\nlatitude = " + latitude, Toast.LENGTH_LONG).show();
 
