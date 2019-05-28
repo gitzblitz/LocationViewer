@@ -32,11 +32,11 @@ android {
 dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha05'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1'
-    testImplementation 'junit:junit:4.13-beta-3'
-    androidTestImplementation 'androidx.test:runner:1.2.0-beta01'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-beta01'
+    implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
+    testImplementation "junit:junit:$rootProject.jUnitVersion"
+    androidTestImplementation "androidx.test:runner:$rootProject.testRunnerVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.esspressoVersion"
 
 
     //room
@@ -47,7 +47,16 @@ dependencies {
     //lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.archLifecycleVersion"
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$rootProject.archLifecycleVersion"
-    implementation "androidx.cardview:cardview:$rootProject.cardView"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$rootProject.archLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata:$rootProject.archLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-runtime:$rootProject.archLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.archLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-reactivestreams:$rootProject.archLifecycleVersion"
+    testImplementation "androidx.arch.core:core-testing:$rootProject.archLifecycleVersion"
+
+    //card
+    implementation "androidx.cardview:cardview:$rootProject.cardViewVersion"
+    //material
     implementation "com.google.android.material:material:$rootProject.materialDesign"
 
     // paging
@@ -55,51 +64,37 @@ dependencies {
     testImplementation "androidx.paging:paging-common:$rootProject.pagingVersion"
 
     //rxjava
-    implementation "com.squareup.retrofit2:adapter-rxjava2:2.5.0"
-    implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
 
     //debug bridge
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 
     //moshi
-    implementation 'com.squareup.moshi:moshi:1.8.0'
+    implementation "com.squareup.moshi:moshi:$rootProject.moshiVersion"
 
     //retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-    implementation 'com.squareup.retrofit2:converter-moshi:2.5.0'
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-moshi:$rootProject.retrofitVersion"
 
     //dagger
-    implementation 'com.google.dagger:dagger:2.21'
-    implementation 'com.google.dagger:dagger-android:2.21'
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.21'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.21'
-    implementation 'com.google.dagger:dagger-android-support:2.21'
+    implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android:$rootProject.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
 
-    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
-    implementation 'com.squareup.okio:okio:1.16.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
-
-
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.okHttpVersion"
+    implementation "com.squareup.okio:okio:$rootProject.okIoVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.loggingInterceptorVerison"
 
 
 
-    def lifecycle_version = "2.0.0"
 
-    // ViewModel and LiveData
-    // alternatively - just ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version" // For Kotlin use lifecycle-viewmodel-ktx
-    // alternatively - just LiveData
-    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
-    // alternatively - Lifecycles only (no ViewModel or LiveData). Some UI
-    //     AndroidX libraries use this lightweight import for Lifecycle
-    implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle_version"
 
-    // alternately - if using Java8, use the following instead of lifecycle-compiler
-    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
 
-    // optional - ReactiveStreams support for LiveData
-    implementation "androidx.lifecycle:lifecycle-reactivestreams:$lifecycle_version" // For Kotlin use lifecycle-reactivestreams-ktx
 
-    // optional - Test helpers for LiveData
-    testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
+
+
+
 }
