@@ -20,6 +20,7 @@ This is an application to capture location data. It has the following features
 ![alt text](add_location.png "Location list")
 
 ### 3. Edit location
+Open edit location by a long press on list item
 
 ![alt text](edit_choose_location.png "Location list")
 
