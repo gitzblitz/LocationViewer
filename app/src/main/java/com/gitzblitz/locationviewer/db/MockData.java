@@ -1,9 +1,12 @@
 package com.gitzblitz.locationviewer.db;
 
+import android.annotation.SuppressLint;
+
 import com.gitzblitz.locationviewer.model.Location;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -29,9 +32,14 @@ public class MockData {
                 randomInt = rand.nextInt(len );
             }
             String randCity = cities[randomInt];
+            @SuppressLint("DefaultLocale") Double d = Double.parseDouble(String.format("%.6f",rand.nextDouble())) ;
+
             Location location = new Location(randCity,
-                    "Lorem ipsum dhgeghdfh  fhdfgdfgh", false,
-                    "GPS", "", "", Double.toString(rand.nextDouble()) , Double.toString(rand.nextDouble()), null, "");
+                    "Lorem ipsum some random location description", false,
+                    "GPS", "", "",
+                    String.format(Locale.getDefault(), "%.6f",rand.nextDouble()) ,
+                    String.format(Locale.getDefault(), "%.6f",rand.nextDouble()),
+                    null, "");
 
             mockLocations.add(location);
         }

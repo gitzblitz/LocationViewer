@@ -20,6 +20,8 @@
     <string name="edit_location">Edit Location</string>
     <string name="location_details">Location Details</string>
     <string name="timestamp">Date 01/01/2019 5 pm</string>
+    <string name="coordinates">Coordinates</string>
+    <string name="weather_icon">Weather icon</string>
 
 
     <string-array name="location_providers">
