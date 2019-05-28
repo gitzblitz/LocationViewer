@@ -49,7 +49,7 @@ public class LocationRepository {
 
     public Location updateLocationWithWeather(WeatherData data, Location location) {
 
-        location.setTemperature(Double.toString(data.getMain().getTemp()));
+        location.setTemperature(data.getMain().getTemp() + " \u2103");
         location.setWeatherDate(new Date(TimeUnit.SECONDS.toMillis(data.getDt())));
 
         locationDao.updateLocation(location);
